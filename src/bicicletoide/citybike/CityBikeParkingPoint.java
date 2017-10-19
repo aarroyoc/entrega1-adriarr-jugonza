@@ -4,6 +4,6 @@ import fabricante.externo.tarjetas.*;
 
 public class CityBikeParkingPoint {
 	public static void main(String[] args){
-		new TarjetaMonedero("");
+		TarjetaMonedero t = new TarjetaMonedero("");
 	}
 }
