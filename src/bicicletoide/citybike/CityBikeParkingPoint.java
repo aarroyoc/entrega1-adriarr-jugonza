@@ -43,6 +43,10 @@ public class CityBikeParkingPoint {
 		}
 	}
 	/**Devuelve la distancia a un punto dado
+	 * 
+	 * @param punto
+	 * @return
+	 */
 	public double getDistancia(GPS punto){
 		return coordenadas.getDistancia(punto);
 	}
