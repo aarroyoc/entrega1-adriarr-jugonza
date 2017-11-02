@@ -15,32 +15,72 @@ import bicicletoide.citybike.gps.GPS;
  *
  */
 public class CityBikeSystem {
-	
-	private BigDecimal fianza;
-	
-	public void addCityBikeParkingPoint(CityBikeParkingPoint point){
-		
+
+	private double fianza;
+	private ArrayList<CityBikeParkingPoint> points;
+
+	public CityBikeSystem() {
+		this.points = new ArrayList();
 	}
-	public void removeCityBikeParkingPoint(CityBikeParkingPoint point){
-		
+
+	/**
+	 * Añade un punto al sistema
+	 * 
+	 * @param point
+	 */
+	public void addCityBikeParkingPoint(CityBikeParkingPoint point) {
+		points.add(point);
 	}
-	public void setFianza(BigDecimal fianza){
+
+	public void removeCityBikeParkingPoint(CityBikeParkingPoint point) {
+		points.remove(point);
+	}
+
+	public void setFianza(double fianza){
+		if (fianza<0){
+			throw new IllegalArgumentException();
+		}
 		this.fianza = fianza;
 	}
-	
-	public List<CityBikeParkingPoint> getAllCityBikeParkingPoints(){
-		return new ArrayList<CityBikeParkingPoint>();
+
+	public List<CityBikeParkingPoint> getAllCityBikeParkingPoints() {
+		return (List) points.clone();
 	}
-	
-	public List<CityBikeParkingPoint> getAllCityBikeParkingPoints(GPS gps,long radius){
-		return new ArrayList<CityBikeParkingPoint>();
+
+	/**
+	 * 
+	 * @param gps
+	 * @param radius
+	 * @return
+	 */
+	public List<CityBikeParkingPoint> getAllCityBikeParkingPoints(GPS gps, long radius) {
+		ArrayList<CityBikeParkingPoint> pointsNuevo = new ArrayList <CityBikeParkingPoint>();
+		for (CityBikeParkingPoint p : points) {
+			if (p.getDistancia(gps) < radius) {
+				pointsNuevo.add(new CityBikeParkingPoint(p));
+			}
+		}
+		return pointsNuevo;
 	}
-	
-	public List<CityBikeParkingPoint> getCityBikeParkingPointsWithBikes(){
-		return new ArrayList<CityBikeParkingPoint>();
+
+	public List<CityBikeParkingPoint> getCityBikeParkingPointsWithBikes() {
+		ArrayList<CityBikeParkingPoint> pointsNuevo = new ArrayList <CityBikeParkingPoint>();
+		for (CityBikeParkingPoint p : points) {
+			if (p.getNumeroAnclajesOcupados() > 0) {
+				pointsNuevo.add(new CityBikeParkingPoint(p));
+			}
+		}
+		return pointsNuevo;
 	}
-	public List<CityBikeParkingPoint> getCityBikeParkingPointsWithSpace(){
-		return new ArrayList<CityBikeParkingPoint>();
+
+	public List<CityBikeParkingPoint> getCityBikeParkingPointsWithSpace() {
+		ArrayList <CityBikeParkingPoint> pointsNuevo = new ArrayList <CityBikeParkingPoint>();
+		for (CityBikeParkingPoint p : points) {
+			if (p.getNumeroAnclajesOcupados() < p.getNumeroAnclajes()) {
+				pointsNuevo.add(new CityBikeParkingPoint(p));
+			}
+		}
+		return pointsNuevo;
 	}
-	
+
 }

@@ -23,6 +23,15 @@ public class CityBikeParkingPoint {
 		this.coordenadas = new GPS(latitud,longitud);
 	}
 	/**
+	 * Constructor de copia
+	 * @param punto
+	 */
+	public CityBikeParkingPoint(CityBikeParkingPoint punto){
+		this.numeroAnclajes = punto.getNumeroAnclajes();
+		this.numeroAnclajesOcupados = punto.getNumeroAnclajesOcupados();
+		this.coordenadas = new GPS(punto.getCoordenadas().getLatitud(),punto.getCoordenadas().getLongitud());
+	}
+	/**
 	 * Quita una bici del punto de aparcamiento si quedan bicis en los anclajes
 	 */
 	public void prestarBici(){
@@ -65,6 +74,9 @@ public class CityBikeParkingPoint {
 
 	public GPS getCoordenadas() {
 		return coordenadas;
+	}
+	public int getNumeroAnclajes() {
+		return numeroAnclajes;
 	}
 	
 }
