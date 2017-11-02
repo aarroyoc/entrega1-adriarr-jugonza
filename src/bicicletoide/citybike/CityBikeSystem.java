@@ -1,8 +1,8 @@
 package bicicletoide.citybike;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import bicicletoide.citybike.gps.GPS;
 
@@ -24,27 +24,55 @@ public class CityBikeSystem {
 	}
 
 	/**
-	 * A�ade un punto al sistema
+	 * A�ade un punto al sistema. El punto no tiene que haber sido introducido en el sistema con anterioridad
 	 * 
 	 * @param point
 	 */
 	public void addCityBikeParkingPoint(CityBikeParkingPoint point) {
-		points.add(point);
+		if(point == null)
+			throw new IllegalArgumentException();
+		boolean alreadyExists = points.stream().filter(t -> t.equals(point)).findAny().isPresent();
+		if(alreadyExists)
+			throw new IllegalArgumentException("El punto ya forma parte del sistema");
+		points.add(new CityBikeParkingPoint(point));
 	}
-
+	
+	/**
+	 * Elimina un punto del sistema. Se permite (y se recomienda) pasar una copia del punto en cuestión. El punto debe estar en el sistema
+	 * @param point
+	 */
 	public void removeCityBikeParkingPoint(CityBikeParkingPoint point) {
-		points.remove(point);
+		if(point == null)
+			throw new IllegalArgumentException();
+		try{
+			CityBikeParkingPoint p = points.stream().filter(t -> t.equals(point)).findFirst().get();
+			points.remove(p);
+		}catch(NoSuchElementException e){
+			throw new IllegalArgumentException("El punto pasado no existe en el sistema");
+		}
 	}
 
+	/**
+	 * Asigna un nuevo valor para la fianza de las bicicletas en todo el sistema
+	 * @param fianza
+	 */
 	public void setFianza(double fianza){
 		if (fianza<0){
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("La fianza debe ser un número positivo");
 		}
 		this.fianza = fianza;
 	}
-
+	
+	/**
+	 * Devuelve una lista con los puntos que forman parte del sistema
+	 * @return
+	 */
 	public List<CityBikeParkingPoint> getAllCityBikeParkingPoints() {
-		return (List) points.clone();
+		List<CityBikeParkingPoint> pointsNuevo = new ArrayList<CityBikeParkingPoint>();
+		for(CityBikeParkingPoint p : points){
+			pointsNuevo.add(new CityBikeParkingPoint(p));
+		}
+		return pointsNuevo;
 	}
 
 	/**

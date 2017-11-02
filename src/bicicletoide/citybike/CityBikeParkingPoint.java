@@ -4,12 +4,12 @@ import fabricante.externo.tarjetas.*;
 import bicicletoide.citybike.gps.GPS;
 
 public class CityBikeParkingPoint {
-	int numeroAnclajes;
-	int numeroAnclajesOcupados;
-	GPS coordenadas;
+	private int numeroAnclajes;
+	private int numeroAnclajesOcupados;
+	private final GPS coordenadas;
 	
 	/**
-	 * Crea un nuevo punto de aparcamiento con el número de anclajes y anclajes ocupados
+	 * Crea un nuevo punto de aparcamiento con el nï¿½mero de anclajes y anclajes ocupados
 	 * especificado, y en las corrdenadas dadas
 	 * @param numeroAnclajes
 	 * @param numeroAnclajesOcupados
@@ -38,17 +38,17 @@ public class CityBikeParkingPoint {
 		if(numeroAnclajesOcupados>0){
 			numeroAnclajesOcupados-=1;
 		}else{
-			System.out.println("Todos los anclajes están vacíos, hay que ver que hacemos con esos");
+			System.out.println("Todos los anclajes estï¿½n vacï¿½os, hay que ver que hacemos con esos");
 		}
 	}
 	/**
-	 * Añade una bici al punto de aparcamiento si quedan anclajes libres
+	 * Aï¿½ade una bici al punto de aparcamiento si quedan anclajes libres
 	 */
 	public void devolverBici(){
 		if(numeroAnclajesOcupados<numeroAnclajes){
 			numeroAnclajes+=1;
 		}else{
-			System.out.println("Todos los anclajes están ocupados, hay que ver que hacemos con esos");
+			System.out.println("Todos los anclajes estï¿½n ocupados, hay que ver que hacemos con esos");
 		}
 	}
 	/**Devuelve la distancia a un punto dado
@@ -77,6 +77,35 @@ public class CityBikeParkingPoint {
 	}
 	public int getNumeroAnclajes() {
 		return numeroAnclajes;
+	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((coordenadas == null) ? 0 : coordenadas.hashCode());
+		return result;
+	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CityBikeParkingPoint other = (CityBikeParkingPoint) obj;
+		if (coordenadas == null) {
+			if (other.coordenadas != null)
+				return false;
+		} else if (!coordenadas.equals(other.coordenadas))
+			return false;
+		return true;
 	}
 	
 }
