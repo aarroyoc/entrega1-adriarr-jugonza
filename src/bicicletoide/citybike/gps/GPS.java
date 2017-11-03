@@ -85,18 +85,13 @@ public class GPS {
 	public double getDistancia(GPS punto){
 		double distancia;
 		double dlat = Math.abs(degToRad(this.getLatitud() - punto.getLatitud()));
-		System.out.println(dlat);
 		double dlon = Math.abs(degToRad(this.getLongitud() - punto.getLongitud()));
-		System.out.println(dlon);
 		double R = 6371;
 		double a = Math.pow(Math.sin(dlat/2), 2) + 
 				Math.cos(degToRad(this.getLatitud()))*Math.cos(degToRad(punto.getLatitud()))*Math.pow(Math.sin(dlon/2),2);
 		//double c = 2*Math.asin(Math.min(1, Math.sqrt(a)));
-		System.out.println(a);
 		double c = 2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
-		System.out.println(c);
 		distancia = R*c;
-		System.out.println(distancia);
 		
 		return distancia;
 	}
@@ -139,15 +134,6 @@ public class GPS {
 		}
 		
 		this.longitud = longitud;
-	}
-	
-	//Prueba
-	public static void main(String[]args){
-		
-		GPS p1 = new GPS(2.816182,-36.117559);
-		GPS p2 = new GPS(30.84167,10.84167);
-		
-		System.out.print(p1.getDistancia(p2));
 	}
 	
 }
