@@ -84,17 +84,25 @@ public class GPS {
 	 */
 	public double getDistancia(GPS punto){
 		double distancia;
-		double dlon= Math.abs(this.getLongitud()-punto.getLongitud());
-		System.out.print(dlon+"\n");
-		double dlat = Math.abs(this.getLatitud() - punto.getLatitud());
-		System.out.print(dlat+"\n");
-		double a = Math.pow(Math.sin(dlat/2), 2)+ Math.cos(this.getLatitud()) *
-				Math.cos(punto.getLatitud()) * Math.pow(Math.sin(dlon/2), 2);
-		System.out.print(a+"\n");
-		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-		System.out.print(c+"\n");
-		distancia = 6371 * c;
+		double dlat = Math.abs(degToRad(this.getLatitud() - punto.getLatitud()));
+		System.out.println(dlat);
+		double dlon = Math.abs(degToRad(this.getLongitud() - punto.getLongitud()));
+		System.out.println(dlon);
+		double R = 6371;
+		double a = Math.pow(Math.sin(dlat/2), 2) + 
+				Math.cos(degToRad(this.getLatitud()))*Math.cos(degToRad(punto.getLatitud()))*Math.pow(Math.sin(dlon/2),2);
+		//double c = 2*Math.asin(Math.min(1, Math.sqrt(a)));
+		System.out.println(a);
+		double c = 2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+		System.out.println(c);
+		distancia = R*c;
+		System.out.println(distancia);
+		
 		return distancia;
+	}
+	
+	private double degToRad(double deg){
+		return Math.PI*deg/180;
 	}
 
 	public double getLatitud() {
