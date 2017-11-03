@@ -1,16 +1,16 @@
 package bicicletoide.citybike.test;
+
 import bicicletoide.citybike.gps.GPS;
 
 import static org.junit.Assert.*;
 
-import bicicletoide.citybike.gps.GPS;
 
 import org.junit.Test;
 
 public class GPSTest {
 
 	@Test
-	public void test() {
+	public void distancia() {
 		GPS gps = new GPS(50,70);
 		GPS gps2 = new GPS(51,71);
 		double distancia = gps.getDistancia(gps2);
@@ -27,6 +27,25 @@ public class GPSTest {
 		GPS gps = new GPS(50,70);
 		double longitud = gps.getLongitud();
 		assertEquals(70,longitud,0.01);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void wrongConstruct(){
+		GPS gps = new GPS(-180,0);
+		gps.setLatitud(50);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void wrongLatitud(){
+		GPS gps = new GPS(0,0);
+		gps.setLatitud(180);
+	}
+	
+	@Test
+	public void gmsAndGd(){
+		GPS gps1 = new GPS(-5.0847,10.0847);
+		GPS gps2 = new GPS(-5,5,5,10,5,5);
+		assertEquals(gps1,gps2);
 	}
 
 }

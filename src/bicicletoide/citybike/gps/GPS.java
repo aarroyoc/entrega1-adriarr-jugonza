@@ -2,9 +2,9 @@ package bicicletoide.citybike.gps;
 import java.lang.Math;
 
 /**
- * 
+ * Tipo de dato que representa una coordenada en el planeta Tierra
  * @author adriarr
- *
+ * @version 1.0
  */
 public class GPS {
 	// estan almacenados en grados decimales
@@ -12,16 +12,6 @@ public class GPS {
 	//va de -90 a 90
 	private double longitud;
 	//va de -180 a 180
-	
-	//public static enum Latitud{
-	//	LATITUD_NORTE,
-	//	LATITUD_SUR
-	//};
-	
-	//public static enum Longitud{
-	//	LONGITUD_ESTE,
-	//	LONGITUD_OESTE
-	//};
 	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
@@ -50,9 +40,9 @@ public class GPS {
 		if (getClass() != obj.getClass())
 			return false;
 		GPS other = (GPS) obj;
-		if (Double.doubleToLongBits(latitud) != Double.doubleToLongBits(other.latitud))
+		if (Math.abs(latitud - other.latitud) < 0.0001)
 			return false;
-		if (Double.doubleToLongBits(longitud) != Double.doubleToLongBits(other.longitud))
+		if (Math.abs(longitud - other.longitud) < 0.0001)
 			return false;
 		return true;
 	}
@@ -62,6 +52,7 @@ public class GPS {
 	 * entre -90 y 90, y -180 y 180 GD, respectivamente
 	 * @param latitud
 	 * @param longitud
+	 * @throws IllegalArgumentException
 	 */
 	public GPS(double latitud,  double longitud){
 		
@@ -74,6 +65,35 @@ public class GPS {
 		}
 		
 		this.setLatitud(latitud);
+		this.setLongitud(longitud);
+	}
+	/**
+	 * Construye un nuevo punto GPS con la latitud y longitud indicadas, expresado en grados,
+	 * minutos y segundos. Los valores de minutos y segundos tienen que ser positivos. Y los de grados dentro del rango [-90,90] (latitud) y [-180,180] (longitud)
+	 * @param latitudG Grados de la latitud
+	 * @param latitudM Minutos de la latitud
+	 * @param latitudS Segundos de la latitud
+	 * @param longitudG Grados de la longitud
+	 * @param longitudM Minutos de la longitud
+	 * @param longitudS Segundos de la longitud
+	 * @throws IllegalArgumentException
+	 */
+	public GPS(int latitudG, int latitudM, double latitudS, int longitudG, int longitudM, double longitudS){
+		if(latitudM < 0 || latitudS < 0 || longitudM < 0 || longitudS <0){
+			throw new IllegalArgumentException();
+		}
+		if(Math.abs(latitudG) > 90){
+			throw new IllegalArgumentException();
+		}
+		if(Math.abs(longitudG) > 180){
+			throw new IllegalArgumentException();
+		}
+		double latitud = Math.abs(latitudG)+latitudM/60+latitudS/3600;
+		latitud *= Math.signum(latitudG);
+		this.setLatitud(latitud);
+		
+		double longitud = Math.abs(longitudG) + longitudM/60 + longitudS/3600;
+		longitud *= Math.signum(longitudG);
 		this.setLongitud(longitud);
 	}
 	
