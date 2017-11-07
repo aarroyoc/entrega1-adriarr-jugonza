@@ -11,7 +11,7 @@ import bicicletoide.citybike.gps.GPS;
 
 /**
  * 
- * @author adriarr
+ * @author adriarr, jugonza
  *
  */
 public class CityBikeSystem {
@@ -19,8 +19,11 @@ public class CityBikeSystem {
 	private double fianza;
 	private ArrayList<CityBikeParkingPoint> points;
 
+	/**
+	 * Crea una instancia del sistema de gestión de bicicletas de la ciudad. Por defecto, no lleva asignado ningún punto.
+	 */
 	public CityBikeSystem() {
-		this.points = new ArrayList();
+		this.points = new ArrayList<CityBikeParkingPoint>();
 	}
 
 	/**
@@ -76,9 +79,9 @@ public class CityBikeSystem {
 	}
 
 	/**
-	 * 
-	 * @param gps
-	 * @param radius
+	 * Devuelve una lista de puntos de parking cercanos a una coordenada
+	 * @param gps La coordenada GPS sobre la que buscar
+	 * @param radius El radio alrededor de la coordenada sobre el que buscar puntos
 	 * @return
 	 */
 	public List<CityBikeParkingPoint> getAllCityBikeParkingPoints(GPS gps, long radius) {
@@ -91,6 +94,10 @@ public class CityBikeSystem {
 		return pointsNuevo;
 	}
 
+	/**
+	 * Devuelve una lista de puntos de parking con bicicletas disponibles
+	 * @return
+	 */
 	public List<CityBikeParkingPoint> getCityBikeParkingPointsWithBikes() {
 		ArrayList<CityBikeParkingPoint> pointsNuevo = new ArrayList <CityBikeParkingPoint>();
 		for (CityBikeParkingPoint p : points) {
@@ -101,6 +108,10 @@ public class CityBikeSystem {
 		return pointsNuevo;
 	}
 
+	/**
+	 * Devuelve una lista de puntos de parking con sitio libre para dejar la bicicleta
+	 * @return
+	 */
 	public List<CityBikeParkingPoint> getCityBikeParkingPointsWithSpace() {
 		ArrayList <CityBikeParkingPoint> pointsNuevo = new ArrayList <CityBikeParkingPoint>();
 		for (CityBikeParkingPoint p : points) {
