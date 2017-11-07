@@ -3,7 +3,7 @@ import java.lang.Math;
 
 /**
  * Tipo de dato que representa una coordenada en el planeta Tierra
- * @author adriarr
+ * @author adriarr, jugonza
  * @version 1.0
  */
 public class GPS {
@@ -120,6 +120,10 @@ public class GPS {
 		return Math.PI*deg/180;
 	}
 
+	/**
+	 * Obtiene la latitud en grados decimales
+	 * @return
+	 */
 	public double getLatitud() {
 		
 			return latitud;
@@ -138,6 +142,10 @@ public class GPS {
 		this.latitud = latitud;
 	}
 
+	/**
+	 * Obtiene la longitud en grados decimales
+	 * @return
+	 */
 	public double getLongitud() {
 		return longitud;
 	}
