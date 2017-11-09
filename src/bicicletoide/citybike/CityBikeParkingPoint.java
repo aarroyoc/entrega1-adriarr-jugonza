@@ -1,12 +1,13 @@
 package bicicletoide.citybike;
 
-import fabricante.externo.tarjetas.*;
 import bicicletoide.citybike.gps.GPS;
+
+import java.util.List;
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class CityBikeParkingPoint {
-	private int numeroAnclajes;
-	private int numeroAnclajesOcupados;
+	private List<Boolean> anclajes;
 	private final GPS coordenadas;
 	private final UUID id;
 	
@@ -26,8 +27,13 @@ public class CityBikeParkingPoint {
 		if(numeroAnclajesOcupados > numeroAnclajes){
 			throw new IllegalArgumentException();
 		}
-		this.numeroAnclajes = numeroAnclajes;
-		this.numeroAnclajesOcupados = numeroAnclajesOcupados;
+		this.anclajes = new ArrayList<Boolean>();
+		for(int i=0;i<numeroAnclajes-numeroAnclajesOcupados;i++){
+			this.anclajes.add(false);
+		}
+		for(int i=numeroAnclajes-numeroAnclajesOcupados;i<numeroAnclajes;i++){
+			this.anclajes.add(true);
+		}
 		this.coordenadas = new GPS(gps);
 		this.id = UUID.randomUUID();
 	}
@@ -39,8 +45,7 @@ public class CityBikeParkingPoint {
 		if ( punto == null){
 			throw new IllegalArgumentException();
 		}
-		this.numeroAnclajes = punto.getNumeroAnclajes();
-		this.numeroAnclajesOcupados = punto.getNumeroAnclajesOcupados();
+		this.anclajes = punto.getAnclajes();
 		this.coordenadas = new GPS(punto.getCoordenadas().getLatitud(),punto.getCoordenadas().getLongitud());
 		this.id = punto.getId();
 	}
@@ -48,8 +53,13 @@ public class CityBikeParkingPoint {
 	 * Quita una bici del punto de aparcamiento si quedan bicis en los anclajes
 	 */
 	public void prestarBici(){
-		if(numeroAnclajesOcupados>0){
-			numeroAnclajesOcupados-=1;
+		if(this.anclajes.stream().filter(t -> t == true).count() > 0){
+			for(int i=0;i<this.anclajes.size();i++){
+				if(this.anclajes.get(i) == true){
+					this.anclajes.set(i, false);
+					break;
+				}
+			}
 		}else{
 			throw new IllegalStateException("No quedan bicis en el punto de aparcamiento");
 		}
@@ -58,8 +68,13 @@ public class CityBikeParkingPoint {
 	 * A�ade una bici al punto de aparcamiento si quedan anclajes libres
 	 */
 	public void devolverBici(){
-		if(numeroAnclajesOcupados < numeroAnclajes){
-			numeroAnclajesOcupados+=1;
+		if(this.anclajes.stream().filter(t-> t==true).count() < this.anclajes.size()){
+			for(int i=0;i<this.anclajes.size();i++){
+				if(this.anclajes.get(i) == false){
+					this.anclajes.set(i, true);
+					break;
+				}
+			}
 		}else{
 			throw new IllegalStateException("No quedan puntos de anclaje en el punto de aparcamiento");
 		}
@@ -88,14 +103,24 @@ public class CityBikeParkingPoint {
 	}
 	
 	public int getNumeroAnclajesOcupados() {
-		return numeroAnclajesOcupados;
+		return (int) this.anclajes.stream().filter(t -> t == true).count();
+	}
+	
+	public boolean getAnclaje(int index){
+		if(index < 0 || index >= this.anclajes.size())
+			throw new IllegalArgumentException();
+		return this.anclajes.get(index);
 	}
 
 	public GPS getCoordenadas() {
 		return new GPS(coordenadas);
 	}
 	public int getNumeroAnclajes() {
-		return numeroAnclajes;
+		return this.anclajes.size();
+	}
+	@SuppressWarnings("unchecked")
+	public List<Boolean> getAnclajes(){
+		return (List<Boolean>) ((ArrayList<Boolean>) this.anclajes).clone();
 	}
 	public UUID getId(){
 		return this.id;

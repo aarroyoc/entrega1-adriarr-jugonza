@@ -8,16 +8,19 @@ import bicicletoide.citybike.CityBikeParkingPoint;
 
 public class CityBikeParkingPointTest {
 
+	@SuppressWarnings("unused")
 	@Test(expected=IllegalArgumentException.class)
 	public void testConstructorCopiaNulo() {
 		CityBikeParkingPoint point = new CityBikeParkingPoint(null);
 	}
 	
+	@SuppressWarnings("unused")
 	@Test(expected=IllegalArgumentException.class)
 	public void testConstructorAnclajesNegativos(){
 		CityBikeParkingPoint point = new CityBikeParkingPoint(-1,2,new GPS(5,5));
 	}
 	
+	@SuppressWarnings("unused")
 	@Test(expected=IllegalArgumentException.class)
 	public void testConstructorAnclajesMenorQueOcupados(){
 		CityBikeParkingPoint point = new CityBikeParkingPoint(2,3,new GPS(5,5));
