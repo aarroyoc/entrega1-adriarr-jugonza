@@ -29,10 +29,10 @@ public class CityBikeSystem {
 	
 	/**
 	 * Permite al usuario coger una bici del punto de aparcamiento especificado usando la 
-	 * tarjeta monedero, genera una excepción en caso de que no haya saldo suficiente,
+	 * tarjeta monedero, genera una excepcion en caso de que no haya saldo suficiente,
 	 * Si no hay bicis en el punto de aparcamiento se devuelve el dinero.
 	 * 
-	 * Lanza una excepción en caso de que alguno de los argumentos sea null
+	 * Lanza una excepcion en caso de que alguno de los argumentos sea null
 	 * @param p
 	 * @param t
 	 * @throws IllegalArgumentException
@@ -55,7 +55,7 @@ public class CityBikeSystem {
 	 * Permite al usuario devolver una bici al punto de aparcamiento especificado usando la 
 	 * tarjeta monedero, si no hay espacio en el punto de aparcamiento se vuelve a cargar la fianza
 	 *  
-	 * Lanza una excepción en caso de que alguno de los argumentos sea null
+	 * Lanza una excepcion en caso de que alguno de los argumentos sea null
 	 * @param p
 	 * @param t
 	 * @throws IllegalArgumentException
