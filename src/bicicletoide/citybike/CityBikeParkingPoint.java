@@ -10,7 +10,7 @@ public class CityBikeParkingPoint {
 	
 	/**
 	 * Crea un nuevo punto de aparcamiento con el n�mero de anclajes y anclajes ocupados
-	 * especificado, y en las corrdenadas dadas
+	 * especificado, y en las cordenadas dadas
 	 * @param numeroAnclajes
 	 * @param numeroAnclajesOcupados
 	 * @param latitud
@@ -18,6 +18,9 @@ public class CityBikeParkingPoint {
 	 */
 	public CityBikeParkingPoint(int numeroAnclajes,int numeroAnclajesOcupados,
 			double latitud, double longitud){
+		if ( numeroAnclajes <= 0 || numeroAnclajesOcupados < 0){
+			throw new IllegalArgumentException();
+		}
 		this.numeroAnclajes = numeroAnclajes;
 		this.numeroAnclajesOcupados = numeroAnclajesOcupados;
 		this.coordenadas = new GPS(latitud,longitud);
@@ -27,6 +30,9 @@ public class CityBikeParkingPoint {
 	 * @param punto
 	 */
 	public CityBikeParkingPoint(CityBikeParkingPoint punto){
+		if ( punto == null){
+			throw new IllegalArgumentException();
+		}
 		this.numeroAnclajes = punto.getNumeroAnclajes();
 		this.numeroAnclajesOcupados = punto.getNumeroAnclajesOcupados();
 		this.coordenadas = new GPS(punto.getCoordenadas().getLatitud(),punto.getCoordenadas().getLongitud());
@@ -34,21 +40,21 @@ public class CityBikeParkingPoint {
 	/**
 	 * Quita una bici del punto de aparcamiento si quedan bicis en los anclajes
 	 */
-	public void prestarBici(){
+	public void prestarBici() throws Exception{
 		if(numeroAnclajesOcupados>0){
 			numeroAnclajesOcupados-=1;
 		}else{
-			System.out.println("Todos los anclajes est�n vac�os, hay que ver que hacemos con esos");
+			throw new Exception("No quedan bicis en el punto de aparcamiento");
 		}
 	}
 	/**
 	 * A�ade una bici al punto de aparcamiento si quedan anclajes libres
 	 */
-	public void devolverBici(){
+	public void devolverBici() throws Exception{
 		if(numeroAnclajesOcupados<numeroAnclajes){
 			numeroAnclajes+=1;
 		}else{
-			System.out.println("Todos los anclajes est�n ocupados, hay que ver que hacemos con esos");
+			throw new Exception("No quedan puntos de anclaje en el punto de aparcamiento");
 		}
 	}
 	/**Devuelve la distancia a un punto dado
@@ -57,6 +63,9 @@ public class CityBikeParkingPoint {
 	 * @return
 	 */
 	public double getDistancia(GPS punto){
+		if ( punto == null){
+			throw new IllegalArgumentException();
+		}
 		return coordenadas.getDistancia(punto);
 	}
 	/**
@@ -65,6 +74,9 @@ public class CityBikeParkingPoint {
 	 * @return
 	 */
 	public double getDistancia(CityBikeParkingPoint punto){
+		if ( punto == null){
+			throw new IllegalArgumentException();
+		}
 		return coordenadas.getDistancia(punto.getCoordenadas());
 	}
 	

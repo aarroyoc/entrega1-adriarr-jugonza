@@ -1,6 +1,7 @@
 package bicicletoide.citybike;
 
 import java.util.ArrayList;
+import fabricante.externo.tarjetas.*;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -25,6 +26,51 @@ public class CityBikeSystem {
 	public CityBikeSystem() {
 		this.points = new ArrayList<CityBikeParkingPoint>();
 	}
+	
+	/**
+	 * Permite al usuario coger una bici del punto de aparcamiento especificado usando la 
+	 * tarjeta monedero, genera una excepción en caso de que no haya saldo suficiente,
+	 * Si no hay bicis en el punto de aparcamiento se devuelve el dinero.
+	 * 
+	 * Lanza una excepción en caso de que alguno de los argumentos sea null
+	 * @param p
+	 * @param t
+	 * @throws IllegalArgumentException
+	 */
+	public void prestarBici(CityBikeParkingPoint p, TarjetaMonedero t){
+		if(p == null || t == null){
+			throw new IllegalArgumentException();
+		}
+		try{
+			if(t.getSaldoActual()>=fianza){
+				t.descontarDelSaldo("6Z1y00Nm31aA-571", fianza);
+				p.prestarBici();
+			}
+		}catch(Exception e){
+			t.recargaSaldo("A156Bv09_1zXo894", fianza);
+		}
+	}
+	
+	/**
+	 * Permite al usuario devolver una bici al punto de aparcamiento especificado usando la 
+	 * tarjeta monedero, si no hay espacio en el punto de aparcamiento se vuelve a cargar la fianza
+	 *  
+	 * Lanza una excepción en caso de que alguno de los argumentos sea null
+	 * @param p
+	 * @param t
+	 * @throws IllegalArgumentException
+	 */
+	public void devolverBici(CityBikeParkingPoint p, TarjetaMonedero t){
+		if(p == null || t == null){
+			throw new IllegalArgumentException();
+		}
+		try{
+			t.recargaSaldo("A156Bv09_1zXo894", fianza);
+			p.devolverBici();
+		}catch(Exception e){
+			t.descontarDelSaldo("6Z1y00Nm31aA-571", fianza);
+		}
+	}
 
 	/**
 	 * Aï¿½ade un punto al sistema. El punto no tiene que haber sido introducido en el sistema con anterioridad
@@ -32,8 +78,9 @@ public class CityBikeSystem {
 	 * @param point
 	 */
 	public void addCityBikeParkingPoint(CityBikeParkingPoint point) {
-		if(point == null)
+		if(point == null){
 			throw new IllegalArgumentException();
+		}
 		boolean alreadyExists = points.stream().filter(t -> t.equals(point)).findAny().isPresent();
 		if(alreadyExists)
 			throw new IllegalArgumentException("El punto ya forma parte del sistema");
@@ -45,8 +92,9 @@ public class CityBikeSystem {
 	 * @param point
 	 */
 	public void removeCityBikeParkingPoint(CityBikeParkingPoint point) {
-		if(point == null)
+		if(point == null){
 			throw new IllegalArgumentException();
+		}
 		try{
 			CityBikeParkingPoint p = points.stream().filter(t -> t.equals(point)).findFirst().get();
 			points.remove(p);
@@ -85,6 +133,9 @@ public class CityBikeSystem {
 	 * @return
 	 */
 	public List<CityBikeParkingPoint> getAllCityBikeParkingPoints(GPS gps, long radius) {
+		if(gps == null){
+			throw new IllegalArgumentException();
+		}
 		ArrayList<CityBikeParkingPoint> pointsNuevo = new ArrayList <CityBikeParkingPoint>();
 		for (CityBikeParkingPoint p : points) {
 			if (p.getDistancia(gps) < radius) {
