@@ -19,7 +19,7 @@ public class CityBikeParkingPoint {
 	 * @param longitud
 	 */
 	public CityBikeParkingPoint(int numeroAnclajes,int numeroAnclajesOcupados,
-			double latitud, double longitud){
+			GPS gps){
 		if ( numeroAnclajes <= 0 || numeroAnclajesOcupados < 0){
 			throw new IllegalArgumentException();
 		}
@@ -28,7 +28,7 @@ public class CityBikeParkingPoint {
 		}
 		this.numeroAnclajes = numeroAnclajes;
 		this.numeroAnclajesOcupados = numeroAnclajesOcupados;
-		this.coordenadas = new GPS(latitud,longitud);
+		this.coordenadas = new GPS(gps);
 		this.id = UUID.randomUUID();
 	}
 	/**
@@ -92,7 +92,7 @@ public class CityBikeParkingPoint {
 	}
 
 	public GPS getCoordenadas() {
-		return coordenadas;
+		return new GPS(coordenadas);
 	}
 	public int getNumeroAnclajes() {
 		return numeroAnclajes;

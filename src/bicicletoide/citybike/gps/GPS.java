@@ -40,11 +40,20 @@ public class GPS {
 		if (getClass() != obj.getClass())
 			return false;
 		GPS other = (GPS) obj;
-		if (Math.abs(latitud - other.latitud) > 0.0001)
+		if (Math.abs(latitud - other.latitud) > 0.1)
 			return false;
-		if (Math.abs(longitud - other.longitud) > 0.0001)
+		if (Math.abs(longitud - other.longitud) > 0.1)
 			return false;
 		return true;
+	}
+	
+	/**
+	 * Constructor de copia de la clase GPS
+	 * @param gps
+	 */
+	public GPS(GPS gps){
+		this.setLatitud(gps.getLatitud());
+		this.setLongitud(gps.getLongitud());
 	}
 
 	/**
