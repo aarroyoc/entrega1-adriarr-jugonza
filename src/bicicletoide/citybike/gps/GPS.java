@@ -40,9 +40,9 @@ public class GPS {
 		if (getClass() != obj.getClass())
 			return false;
 		GPS other = (GPS) obj;
-		if (Math.abs(latitud - other.latitud) < 0.0001)
+		if (Math.abs(latitud - other.latitud) > 0.0001)
 			return false;
-		if (Math.abs(longitud - other.longitud) < 0.0001)
+		if (Math.abs(longitud - other.longitud) > 0.0001)
 			return false;
 		return true;
 	}

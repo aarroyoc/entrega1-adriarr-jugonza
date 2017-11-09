@@ -47,5 +47,12 @@ public class GPSTest {
 		GPS gps2 = new GPS(-5,5,5,10,5,5);
 		assertEquals(gps1,gps2);
 	}
+	
+	@Test
+	public void testEquals(){
+		GPS gps1 = new GPS(5,10);
+		GPS gps2 = new GPS(5,10);
+		assertEquals(gps1,gps2);
+	}
 
 }

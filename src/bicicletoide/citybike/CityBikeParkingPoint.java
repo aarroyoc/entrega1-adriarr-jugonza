@@ -21,6 +21,9 @@ public class CityBikeParkingPoint {
 		if ( numeroAnclajes <= 0 || numeroAnclajesOcupados < 0){
 			throw new IllegalArgumentException();
 		}
+		if(numeroAnclajesOcupados > numeroAnclajes){
+			throw new IllegalArgumentException();
+		}
 		this.numeroAnclajes = numeroAnclajes;
 		this.numeroAnclajesOcupados = numeroAnclajesOcupados;
 		this.coordenadas = new GPS(latitud,longitud);
@@ -40,21 +43,21 @@ public class CityBikeParkingPoint {
 	/**
 	 * Quita una bici del punto de aparcamiento si quedan bicis en los anclajes
 	 */
-	public void prestarBici() throws Exception{
+	public void prestarBici(){
 		if(numeroAnclajesOcupados>0){
 			numeroAnclajesOcupados-=1;
 		}else{
-			throw new Exception("No quedan bicis en el punto de aparcamiento");
+			throw new IllegalStateException("No quedan bicis en el punto de aparcamiento");
 		}
 	}
 	/**
 	 * A�ade una bici al punto de aparcamiento si quedan anclajes libres
 	 */
-	public void devolverBici() throws Exception{
-		if(numeroAnclajesOcupados<numeroAnclajes){
-			numeroAnclajes+=1;
+	public void devolverBici(){
+		if(numeroAnclajesOcupados < numeroAnclajes){
+			numeroAnclajesOcupados+=1;
 		}else{
-			throw new Exception("No quedan puntos de anclaje en el punto de aparcamiento");
+			throw new IllegalStateException("No quedan puntos de anclaje en el punto de aparcamiento");
 		}
 	}
 	/**Devuelve la distancia a un punto dado
