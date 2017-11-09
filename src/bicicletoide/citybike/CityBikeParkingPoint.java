@@ -2,11 +2,13 @@ package bicicletoide.citybike;
 
 import fabricante.externo.tarjetas.*;
 import bicicletoide.citybike.gps.GPS;
+import java.util.UUID;
 
 public class CityBikeParkingPoint {
 	private int numeroAnclajes;
 	private int numeroAnclajesOcupados;
 	private final GPS coordenadas;
+	private final UUID id;
 	
 	/**
 	 * Crea un nuevo punto de aparcamiento con el n�mero de anclajes y anclajes ocupados
@@ -27,6 +29,7 @@ public class CityBikeParkingPoint {
 		this.numeroAnclajes = numeroAnclajes;
 		this.numeroAnclajesOcupados = numeroAnclajesOcupados;
 		this.coordenadas = new GPS(latitud,longitud);
+		this.id = UUID.randomUUID();
 	}
 	/**
 	 * Constructor de copia
@@ -39,6 +42,7 @@ public class CityBikeParkingPoint {
 		this.numeroAnclajes = punto.getNumeroAnclajes();
 		this.numeroAnclajesOcupados = punto.getNumeroAnclajesOcupados();
 		this.coordenadas = new GPS(punto.getCoordenadas().getLatitud(),punto.getCoordenadas().getLongitud());
+		this.id = punto.getId();
 	}
 	/**
 	 * Quita una bici del punto de aparcamiento si quedan bicis en los anclajes
@@ -92,6 +96,9 @@ public class CityBikeParkingPoint {
 	}
 	public int getNumeroAnclajes() {
 		return numeroAnclajes;
+	}
+	public UUID getId(){
+		return this.id;
 	}
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
