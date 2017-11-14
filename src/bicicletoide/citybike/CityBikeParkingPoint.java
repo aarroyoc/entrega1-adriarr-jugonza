@@ -93,7 +93,7 @@ public class CityBikeParkingPoint {
 			throw new IllegalStateException("No quedan puntos de anclaje en el punto de aparcamiento");
 		}
 	}
-	/**Devuelve la distancia a un punto dado a una coordenada GPS
+	/**Devuelve la distancia a un punto dado por una coordenada GPS
 	 * 
 	 * @param punto Coordenada GPS
 	 * @return Distancia (en km) al otro punto

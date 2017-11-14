@@ -13,21 +13,7 @@ public class GPS {
 	private double longitud;
 	//va de -180 a 180
 	
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		long temp;
-		temp = Double.doubleToLongBits(latitud);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(longitud);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		return result;
-	}
-
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
@@ -76,6 +62,7 @@ public class GPS {
 		this.setLatitud(latitud);
 		this.setLongitud(longitud);
 	}
+	
 	/**
 	 * Construye un nuevo punto GPS con la latitud y longitud indicadas, expresado en grados,
 	 * minutos y segundos. Los valores de minutos y segundos tienen que ser positivos. Y los de grados dentro del rango [-90,90] (latitud) y [-180,180] (longitud)
@@ -91,18 +78,19 @@ public class GPS {
 		if(latitudM < 0 || latitudS < 0 || longitudM < 0 || longitudS <0){
 			throw new IllegalArgumentException();
 		}
-		if(Math.abs(latitudG) > 90){
-			throw new IllegalArgumentException();
-		}
-		if(Math.abs(longitudG) > 180){
-			throw new IllegalArgumentException();
-		}
-		double latitud = Math.abs(latitudG)+latitudM/60+latitudS/3600;
+		
+		double latitud = Math.abs(latitudG)+latitudM/60.0 + latitudS/3600;
 		latitud *= Math.signum(latitudG);
+		if(Math.abs(latitud) > 90){
+			throw new IllegalArgumentException();
+		}
 		this.setLatitud(latitud);
 		
-		double longitud = Math.abs(longitudG) + longitudM/60 + longitudS/3600;
+		double longitud = Math.abs(longitudG) + longitudM/60.0 + longitudS/3600;
 		longitud *= Math.signum(longitudG);
+		if(Math.abs(longitud) > 180){
+			throw new IllegalArgumentException();
+		}
 		this.setLongitud(longitud);
 	}
 	
@@ -134,7 +122,6 @@ public class GPS {
 	 * @return
 	 */
 	public double getLatitud() {
-		
 			return latitud;
 	}
 	/**

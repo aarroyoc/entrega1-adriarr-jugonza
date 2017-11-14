@@ -30,15 +30,31 @@ public class GPSTest {
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void wrongConstruct(){
+	public void ContructorLatitudMal(){
 		GPS gps = new GPS(-180,0);
-		gps.setLatitud(50);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void wrongLatitud(){
+	public void SetLatitudMal(){
 		GPS gps = new GPS(0,0);
 		gps.setLatitud(180);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void ConstructorLongitudMal(){
+		GPS gps = new GPS(0,200);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void SetLongitudMal(){
+		GPS gps = new GPS(0,0);
+		gps.setLongitud(200);
+	}
+	
+	@Test
+	public void ConstructorGDBien(){
+		GPS gps = new GPS(10,20);
+		assertNotNull(gps);
 	}
 	
 	@Test
@@ -54,5 +70,64 @@ public class GPSTest {
 		GPS gps2 = new GPS(5,10);
 		assertEquals(gps1,gps2);
 	}
-
+	
+	//Tests del constructor gms
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void latitudMenor90(){
+		GPS gps = new GPS(-91,0,0,0,0,0);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void latitudMayor90(){
+		GPS gps = new GPS(91,0,0,0,0,0);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void longitudMenor180(){
+		GPS gps = new GPS(0,0,0,-181,0,0);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void longitudMayor180(){
+		GPS gps = new GPS(0,0,0,180,10,0);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void latitudMNegativo(){
+		GPS gps = new GPS(0,-2,0,0,0,0);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void latitudSNegativo(){
+		GPS gps = new GPS(0,0,-5,0,0,0);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void longitudMNegativo(){
+		GPS gps = new GPS(0,0,0,0,-5,0);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void longitudSNegativo(){
+		GPS gps = new GPS(0,0,0,0,0,-7);
+	}
+	
+	@Test
+	public void ConstructorGMSBien(){
+		GPS gps = new GPS(10,20,30,-10,20,30);
+		assertNotNull(gps);
+	}
+	
+	@Test
+	public void getLatitudGMS(){
+		GPS gps = new GPS(10,0,0,0,0,0);
+		assertEquals(10, gps.getLatitud(),0);;
+	}
+	
+	@Test
+	public void getLongitudGMS(){
+		GPS gps = new GPS(0,0,0,10,0,0);
+		assertEquals(10, gps.getLongitud(),0);;
+	}
 }
