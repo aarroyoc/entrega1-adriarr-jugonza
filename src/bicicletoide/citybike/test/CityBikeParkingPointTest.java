@@ -134,6 +134,7 @@ public class CityBikeParkingPointTest {
 		assertEquals(4,p.getNumeroAnclajes());
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Test
 	public void testGetAnclajes(){
 		CityBikeParkingPoint p = new CityBikeParkingPoint(4,2,new GPS(50,0));

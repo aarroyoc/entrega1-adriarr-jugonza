@@ -35,19 +35,25 @@ public class CityBikeSystem {
 	 * Lanza una excepcion en caso de que alguno de los argumentos sea null
 	 * @param p
 	 * @param t
-	 * @throws IllegalArgumentException
+	 * @throws IllegalArgumentException Saldo insuficiente en ela tarjeta
+	 * @throws IllegalStateException No hay bicis disponibles para prestar en el punto
+	 * @throws NoSuchElementException Si el punto no existe en el sistema
 	 */
-	public void prestarBici(CityBikeParkingPoint p, TarjetaMonedero t){
-		if(p == null || t == null){
+	public void prestarBici(CityBikeParkingPoint point, TarjetaMonedero t){
+		if(point == null || t == null){
 			throw new IllegalArgumentException();
 		}
+		CityBikeParkingPoint p = points.stream().filter(x -> x.getId().equals(point.getId())).findFirst().get();
 		try{
 			if(t.getSaldoActual()>=fianza){
 				t.descontarDelSaldo("6Z1y00Nm31aA-571", fianza);
 				p.prestarBici();
+			}else{
+				throw new IllegalArgumentException();
 			}
-		}catch(Exception e){
+		}catch(IllegalStateException e){
 			t.recargaSaldo("A156Bv09_1zXo894", fianza);
+			throw new IllegalStateException();
 		}
 	}
 	
@@ -60,10 +66,11 @@ public class CityBikeSystem {
 	 * @param t
 	 * @throws IllegalArgumentException
 	 */
-	public void devolverBici(CityBikeParkingPoint p, TarjetaMonedero t){
-		if(p == null || t == null){
+	public void devolverBici(CityBikeParkingPoint point, TarjetaMonedero t){
+		if(point == null || t == null){
 			throw new IllegalArgumentException();
 		}
+		CityBikeParkingPoint p = points.stream().filter(x -> x.getId().equals(point.getId())).findFirst().get();
 		try{
 			t.recargaSaldo("A156Bv09_1zXo894", fianza);
 			p.devolverBici();
