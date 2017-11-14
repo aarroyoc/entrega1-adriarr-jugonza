@@ -167,5 +167,76 @@ public class CityBikeSystemTest {
 		CityBikeParkingPoint p = new CityBikeParkingPoint(12,0,new GPS(0,0));
 		cbs.prestarBici(p, visa);
 	}
+	
+	
+	@Test
+	public void devolverBiciOk(){
+		TarjetaMonedero visa = new TarjetaMonedero("A156Bv09_1zXo894",100);
+		CityBikeSystem cbs = new CityBikeSystem();
+		cbs.setFianza(50);
+		CityBikeParkingPoint p = new CityBikeParkingPoint(12,7,new GPS(0,0));
+		cbs.addCityBikeParkingPoint(p);
+		cbs.devolverBici(p, visa);
+		
+		CityBikeParkingPoint p2 = cbs.getAllCityBikeParkingPoints().get(0);
+		assertEquals(8,p2.getNumeroAnclajesOcupados());
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void devolverBiciTarjetaNull(){
+		CityBikeSystem cbs = new CityBikeSystem();
+		cbs.setFianza(50);
+		CityBikeParkingPoint p = new CityBikeParkingPoint(12,7,new GPS(0,0));
+		cbs.addCityBikeParkingPoint(p);
+		cbs.devolverBici(p, null);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void devolverBiciNull(){
+		TarjetaMonedero visa = new TarjetaMonedero("A156Bv09_1zXo894",100);
+		CityBikeSystem cbs = new CityBikeSystem();
+		cbs.setFianza(50);
+		CityBikeParkingPoint p = new CityBikeParkingPoint(12,7,new GPS(0,0));
+		cbs.addCityBikeParkingPoint(p);
+		cbs.devolverBici(null, visa);
+	}
+	
+	@Test(expected=IllegalStateException.class)
+	public void devolverBiciSinHuecos(){
+		TarjetaMonedero visa = new TarjetaMonedero("A156Bv09_1zXo894",100);
+		CityBikeSystem cbs = new CityBikeSystem();
+		cbs.setFianza(50);
+		CityBikeParkingPoint p = new CityBikeParkingPoint(12,12,new GPS(0,0));
+		cbs.addCityBikeParkingPoint(p);
+		cbs.devolverBici(p, visa);
+	}
+	
+	@Test
+	public void devolverBiciSaldo(){
+		TarjetaMonedero visa = new TarjetaMonedero("A156Bv09_1zXo894",25);
+		CityBikeSystem cbs = new CityBikeSystem();
+		cbs.setFianza(50);
+		CityBikeParkingPoint p = new CityBikeParkingPoint(12,0,new GPS(0,0));
+		cbs.addCityBikeParkingPoint(p);
+		cbs.devolverBici(p, visa);
+		assertEquals(75,visa.getSaldoActual(),0.001);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void devolverBiciSinFianza(){
+		TarjetaMonedero visa = new TarjetaMonedero("A156Bv09_1zXo894",25);
+		CityBikeSystem cbs = new CityBikeSystem();
+		CityBikeParkingPoint p = new CityBikeParkingPoint(12,0,new GPS(0,0));
+		cbs.addCityBikeParkingPoint(p);
+		cbs.devolverBici(p, visa);
+	}
+	
+	@Test(expected=NoSuchElementException.class)
+	public void devolverBiciPuntoExterior(){
+		TarjetaMonedero visa = new TarjetaMonedero("A156Bv09_1zXo894",25);
+		CityBikeSystem cbs = new CityBikeSystem();
+		CityBikeParkingPoint p = new CityBikeParkingPoint(12,0,new GPS(0,0));
+		cbs.devolverBici(p, visa);
+	}
 
 }

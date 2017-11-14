@@ -35,7 +35,7 @@ public class CityBikeSystem {
 	 * Lanza una excepcion en caso de que alguno de los argumentos sea null
 	 * @param p
 	 * @param t
-	 * @throws IllegalArgumentException Saldo insuficiente en ela tarjeta
+	 * @throws IllegalArgumentException Saldo insuficiente en en la tarjeta
 	 * @throws IllegalStateException No hay bicis disponibles para prestar en el punto
 	 * @throws NoSuchElementException Si el punto no existe en el sistema
 	 */
@@ -64,7 +64,9 @@ public class CityBikeSystem {
 	 * Lanza una excepcion en caso de que alguno de los argumentos sea null
 	 * @param p
 	 * @param t
-	 * @throws IllegalArgumentException
+	 * @throws IllegalArgumentException Punto o tarjeta son null
+	 * @throws IllegalStateException No hay huecos para dejar la bici
+	 * @throws NoSuchElementException El punto no existe en el sistema
 	 */
 	public void devolverBici(CityBikeParkingPoint point, TarjetaMonedero t){
 		if(point == null || t == null){
@@ -74,8 +76,9 @@ public class CityBikeSystem {
 		try{
 			t.recargaSaldo("A156Bv09_1zXo894", fianza);
 			p.devolverBici();
-		}catch(Exception e){
+		}catch(IllegalStateException e){
 			t.descontarDelSaldo("6Z1y00Nm31aA-571", fianza);
+			throw new IllegalStateException();
 		}
 	}
 
