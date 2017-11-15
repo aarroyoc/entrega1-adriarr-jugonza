@@ -10,12 +10,19 @@ import org.junit.Test;
 public class GPSTest {
 
 	@Test
-	public void distancia() {
+	public void testDistancia() {
 		GPS gps = new GPS(50,70);
 		GPS gps2 = new GPS(51,71);
 		double distancia = gps.getDistancia(gps2);
 		assertEquals(131.94,distancia,1);
 	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testDistanciaNull() {
+		GPS gps = new GPS(50,70);
+		gps.getDistancia(null);
+	}
+	
 	@Test
 	public void testGetLatitud() {
 		GPS gps = new GPS(50,70);
@@ -30,25 +37,46 @@ public class GPSTest {
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void ContructorLatitudMal(){
+	public void ContructorLatitudGDMenorMenos90(){
 		GPS gps = new GPS(-180,0);
+	}
+	@Test(expected=IllegalArgumentException.class)
+	public void ContructorLatitudGDMayor90(){
+		GPS gps = new GPS(180,0);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void SetLatitudMal(){
+	public void SetLatitudGDMayor90(){
 		GPS gps = new GPS(0,0);
 		gps.setLatitud(180);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void ConstructorLongitudMal(){
+	public void SetLatitudGDMenorMenos90(){
+		GPS gps = new GPS(0,0);
+		gps.setLatitud(-180);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void ConstructorLongitudGDMayor180(){
 		GPS gps = new GPS(0,200);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void SetLongitudMal(){
+	public void ConstructorLongitudGDMenorMenos180(){
+		GPS gps = new GPS(0,-200);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void SetLongitudGDMayor180(){
 		GPS gps = new GPS(0,0);
 		gps.setLongitud(200);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void SetLongitudGDMenorMenos180(){
+		GPS gps = new GPS(0,0);
+		gps.setLongitud(-200);
 	}
 	
 	@Test
@@ -71,25 +99,32 @@ public class GPSTest {
 		assertEquals(gps1,gps2);
 	}
 	
+	@Test
+	public void testEqualsNull(){
+		GPS gps1 = new GPS(5,10);
+		GPS gps2 = new GPS(5,10);
+		assertFalse(gps1.equals(null));
+	}
+	
 	//Tests del constructor gms
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void latitudMenor90(){
+	public void latitudGMSMenor90(){
 		GPS gps = new GPS(-91,0,0,0,0,0);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void latitudMayor90(){
+	public void latitudGMSMayor90(){
 		GPS gps = new GPS(91,0,0,0,0,0);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void longitudMenor180(){
+	public void longitudGMSMenor180(){
 		GPS gps = new GPS(0,0,0,-181,0,0);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void longitudMayor180(){
+	public void longitudGMSMayor180(){
 		GPS gps = new GPS(0,0,0,180,10,0);
 	}
 	
@@ -129,5 +164,16 @@ public class GPSTest {
 	public void getLongitudGMS(){
 		GPS gps = new GPS(0,0,0,10,0,0);
 		assertEquals(10, gps.getLongitud(),0);;
+	}
+	
+	@Test
+	public void testCopia(){
+		GPS gps = new GPS(0,0,0,10,0,0);
+		assertEquals(gps, new GPS(gps));;
+	}
+	
+	@Test (expected = IllegalArgumentException.class)
+	public void testCopiaNull(){
+		new GPS(null);
 	}
 }

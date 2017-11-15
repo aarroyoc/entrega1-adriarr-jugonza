@@ -17,6 +17,12 @@ public class CityBikeParkingPointTest {
 		CityBikeParkingPoint point = new CityBikeParkingPoint(null);
 	}
 	
+	@Test
+	public void testConstructorCopiaBien() {
+		CityBikeParkingPoint point = new CityBikeParkingPoint(5,0,new GPS(5,5));
+		assertEquals(point,new CityBikeParkingPoint(point));
+	}
+	
 	@SuppressWarnings("unused")
 	@Test(expected=IllegalArgumentException.class)
 	public void testConstructorAnclajesNegativos(){
@@ -159,6 +165,20 @@ public class CityBikeParkingPointTest {
 		CityBikeParkingPoint point1 = new CityBikeParkingPoint(3,2,new GPS(50,0));
 		CityBikeParkingPoint point2 = new CityBikeParkingPoint(3,2,new GPS(50,0));
 		assertTrue(point1.equals(point2));
+	}
+	
+	@Test
+	public void testEqualsNull(){
+		GPS gps1 = new GPS(5,10);
+		GPS gps2 = new GPS(5,10);
+		assertFalse(gps1.equals(null));
+	}
+	
+	@Test
+	public void testEqualsOtraClase(){
+		GPS gps1 = new GPS(5,10);
+		String a = "hola";
+		assertFalse(gps1.equals(a));
 	}
 
 }

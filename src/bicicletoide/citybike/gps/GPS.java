@@ -14,7 +14,7 @@ public class GPS {
 	//va de -180 a 180
 	
 	
-	/* (non-Javadoc)
+	/**
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -35,9 +35,13 @@ public class GPS {
 	
 	/**
 	 * Constructor de copia de la clase GPS
-	 * @param gps
+	 * @param gps Objeto GPS del cual se realiza la copia
+	 * @throws IllegalArgumentException
 	 */
 	public GPS(GPS gps){
+		if(gps == null){
+			throw new IllegalArgumentException();
+		}
 		this.setLatitud(gps.getLatitud());
 		this.setLongitud(gps.getLongitud());
 	}
@@ -45,8 +49,8 @@ public class GPS {
 	/**
 	 * Construye un nuevo punto GPS con la latitud y longitud indicadas, que tienen que estar
 	 * entre -90 y 90, y -180 y 180 GD, respectivamente
-	 * @param latitud
-	 * @param longitud
+	 * @param latitud Latitud en GD
+	 * @param longitud Longitud en GD
 	 * @throws IllegalArgumentException
 	 */
 	public GPS(double latitud,  double longitud){
@@ -95,11 +99,14 @@ public class GPS {
 	}
 	
 	/**
-	 * Devuelve la distancia entre dos puntos GPS calculada mediante la f�rmula del haversine
-	 * @param punto
-	 * @return
+	 * Devuelve la distancia entre dos puntos GPS calculada mediante la formula del haversine
+	 * @param punto punto GPS al que se calcula la distancia
+	 * @return La distancia entre los dos puntos
 	 */
 	public double getDistancia(GPS punto){
+		if(punto == null){
+			throw new IllegalArgumentException();
+		}
 		double distancia;
 		double dlat = Math.abs(degToRad(this.getLatitud() - punto.getLatitud()));
 		double dlon = Math.abs(degToRad(this.getLongitud() - punto.getLongitud()));
@@ -119,14 +126,14 @@ public class GPS {
 
 	/**
 	 * Obtiene la latitud en grados decimales
-	 * @return
+	 * @return la latitud del punto
 	 */
 	public double getLatitud() {
 			return latitud;
 	}
 	/**
 	 * Cambia la latitud del punto, el argumento tiene que estar entre -90 y 90 GD
-	 * @param latitud
+	 * @param latitud La nueva latitud proporcionada por el usuario
 	 * @throws IllegalArgumentException
 	 */
 	public void setLatitud(double latitud) throws IllegalArgumentException{
@@ -140,7 +147,7 @@ public class GPS {
 
 	/**
 	 * Obtiene la longitud en grados decimales
-	 * @return
+	 * @return 
 	 */
 	public double getLongitud() {
 		return longitud;
@@ -148,7 +155,7 @@ public class GPS {
 	
 	/**
 	 * Cambia la longitud del punto, el argumento tiene que estar entre -180 y 180 GD
-	 * @param longitud
+	 * @param longitud La nueva longitud proporcionada por el usuario
 	 * @throws IllegalArgumentException
 	 */
 	public void setLongitud(double longitud) throws IllegalArgumentException {

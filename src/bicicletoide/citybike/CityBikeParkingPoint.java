@@ -120,7 +120,7 @@ public class CityBikeParkingPoint {
 	
 	/**
 	 * 
-	 * @return El número de modulos de anclajes actualmente ocupados
+	 * @return El numero de modulos de anclajes actualmente ocupados
 	 */
 	public int getNumeroAnclajesOcupados() {
 		return (int) this.anclajes.stream().filter(t -> t == true).count();
@@ -148,7 +148,7 @@ public class CityBikeParkingPoint {
 	
 	/**
 	 * 
-	 * @return El número de anclajes de los que dispone el punto
+	 * @return El numero de anclajes de los que dispone el punto
 	 */
 	public int getNumeroAnclajes() {
 		return this.anclajes.size();
@@ -156,7 +156,7 @@ public class CityBikeParkingPoint {
 	
 	/**
 	 * 
-	 * @return Una lista con todos los módulos de anclaje del punto
+	 * @return Una lista con todos los modulos de anclaje del punto
 	 */
 	@SuppressWarnings("unchecked")
 	public List<Boolean> getAnclajes(){
@@ -165,22 +165,12 @@ public class CityBikeParkingPoint {
 	
 	/**
 	 * 
-	 * @return El identificador único del punto
+	 * @return El identificador unico del punto
 	 */
 	public UUID getId(){
 		return this.id;
 	}
 	
-	/**
-	 * @see java.lang.Object#hashCode()
-	 */
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((coordenadas == null) ? 0 : coordenadas.hashCode());
-		return result;
-	}
 	/**
 	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
