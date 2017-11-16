@@ -8,6 +8,7 @@ import java.util.UUID;
 
 /**
  * La clase representa un punto de parking de bicicletas, identificado por su ID y su coordenada
+ * Permite anclar y desanclar las bicicletas del parking
  * @author adriarr, jugonza
  *
  */

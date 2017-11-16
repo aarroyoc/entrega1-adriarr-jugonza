@@ -238,5 +238,21 @@ public class CityBikeSystemTest {
 		CityBikeParkingPoint p = new CityBikeParkingPoint(12,0,new GPS(0,0));
 		cbs.devolverBici(p, visa);
 	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void getAllCityBikeParkingPointsGpsNull(){
+		CityBikeSystem cbs = new CityBikeSystem();
+		CityBikeParkingPoint p = new CityBikeParkingPoint(12,0,new GPS(0,0));
+		cbs.addCityBikeParkingPoint(p);
+		cbs.getAllCityBikeParkingPoints(null,5);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void getAllCityBikeParkingPoints(){
+		CityBikeSystem cbs = new CityBikeSystem();
+		CityBikeParkingPoint p = new CityBikeParkingPoint(12,0,new GPS(0,0));
+		cbs.addCityBikeParkingPoint(p);
+		cbs.getAllCityBikeParkingPoints(new GPS(5,5),-4);
+	}
 
 }

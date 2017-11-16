@@ -7,11 +7,11 @@ import java.util.NoSuchElementException;
 
 import bicicletoide.citybike.gps.GPS;
 
-// TODO: TESTS
-// TODO: JavaDoc
 
 /**
- * 
+ * Coordina el sistema de préstamo de bicicletas en una ciudad.
+ * Gestiona los cobros y devoluciones de las fianzas.
+ * Permite realizar búsquedas entre los parkings de bicicletas de la ciudad.
  * @author adriarr, jugonza
  *
  */
@@ -143,7 +143,7 @@ public class CityBikeSystem {
 	 * @return
 	 */
 	public List<CityBikeParkingPoint> getAllCityBikeParkingPoints(GPS gps, long radius) {
-		if(gps == null){
+		if(gps == null || radius < 0){
 			throw new IllegalArgumentException();
 		}
 		ArrayList<CityBikeParkingPoint> pointsNuevo = new ArrayList <CityBikeParkingPoint>();
