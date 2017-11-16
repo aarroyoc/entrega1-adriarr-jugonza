@@ -9,9 +9,9 @@ import bicicletoide.citybike.gps.GPS;
 
 
 /**
- * Coordina el sistema de préstamo de bicicletas en una ciudad.
+ * Coordina el sistema de prestamo de bicicletas en una ciudad.
  * Gestiona los cobros y devoluciones de las fianzas.
- * Permite realizar búsquedas entre los parkings de bicicletas de la ciudad.
+ * Permite realizar busquedas entre los parkings de bicicletas de la ciudad.
  * @author adriarr, jugonza
  *
  */
@@ -21,7 +21,7 @@ public class CityBikeSystem {
 	private ArrayList<CityBikeParkingPoint> points;
 
 	/**
-	 * Crea una instancia del sistema de gestión de bicicletas de la ciudad. Por defecto, no lleva asignado ningún punto.
+	 * Crea una instancia del sistema de gestion de bicicletas de la ciudad. Por defecto, no lleva asignado ningún punto.
 	 */
 	public CityBikeSystem() {
 		this.points = new ArrayList<CityBikeParkingPoint>();
@@ -32,9 +32,8 @@ public class CityBikeSystem {
 	 * tarjeta monedero, genera una excepcion en caso de que no haya saldo suficiente,
 	 * Si no hay bicis en el punto de aparcamiento se devuelve el dinero.
 	 * 
-	 * Lanza una excepcion en caso de que alguno de los argumentos sea null
-	 * @param p
-	 * @param t
+	 * @param point Punto que va a prestar la bici
+	 * @param t Tarjeta proporcionada por el usuario para la fianza
 	 * @throws IllegalArgumentException Saldo insuficiente en en la tarjeta
 	 * @throws IllegalStateException No hay bicis disponibles para prestar en el punto
 	 * @throws NoSuchElementException Si el punto no existe en el sistema
@@ -61,9 +60,8 @@ public class CityBikeSystem {
 	 * Permite al usuario devolver una bici al punto de aparcamiento especificado usando la 
 	 * tarjeta monedero, si no hay espacio en el punto de aparcamiento se vuelve a cargar la fianza
 	 *  
-	 * Lanza una excepcion en caso de que alguno de los argumentos sea null
-	 * @param p
-	 * @param t
+	 * @param point Punto en el que se va a devolver la bici
+	 * @param t Tarjeta proporcionada por el usuario para la fianza
 	 * @throws IllegalArgumentException Punto o tarjeta son null
 	 * @throws IllegalStateException No hay huecos para dejar la bici
 	 * @throws NoSuchElementException El punto no existe en el sistema
@@ -83,9 +81,9 @@ public class CityBikeSystem {
 	}
 
 	/**
-	 * A�ade un punto al sistema. El punto no tiene que haber sido introducido en el sistema con anterioridad
+	 * Anade un punto al sistema. El punto no tiene que haber sido introducido en el sistema con anterioridad
 	 * 
-	 * @param point
+	 * @param point Punto que se anade al sistema de prestamo de bicis
 	 */
 	public void addCityBikeParkingPoint(CityBikeParkingPoint point) {
 		if(point == null){
@@ -98,8 +96,8 @@ public class CityBikeSystem {
 	}
 	
 	/**
-	 * Elimina un punto del sistema. Se permite (y se recomienda) pasar una copia del punto en cuestión. El punto debe estar en el sistema
-	 * @param point
+	 * Elimina un punto del sistema. Se permite (y se recomienda) pasar una copia del punto en cuestion. El punto debe estar en el sistema
+	 * @param point Punto que se va a eliminar del sistema de prestamo de bicis
 	 */
 	public void removeCityBikeParkingPoint(CityBikeParkingPoint point) {
 		if(point == null){
@@ -115,7 +113,7 @@ public class CityBikeSystem {
 
 	/**
 	 * Asigna un nuevo valor para la fianza de las bicicletas en todo el sistema
-	 * @param fianza
+	 * @param fianza Cantidad (en euros) de la fianza
 	 */
 	public void setFianza(double fianza){
 		if (fianza<0){
@@ -126,7 +124,7 @@ public class CityBikeSystem {
 	
 	/**
 	 * Devuelve una lista con los puntos que forman parte del sistema
-	 * @return
+	 * @return La lista de puntos
 	 */
 	public List<CityBikeParkingPoint> getAllCityBikeParkingPoints() {
 		List<CityBikeParkingPoint> pointsNuevo = new ArrayList<CityBikeParkingPoint>();
@@ -140,7 +138,7 @@ public class CityBikeSystem {
 	 * Devuelve una lista de puntos de parking cercanos a una coordenada
 	 * @param gps La coordenada GPS sobre la que buscar
 	 * @param radius El radio alrededor de la coordenada sobre el que buscar puntos
-	 * @return
+	 * @return La lista de puntos que cumplen la condicion
 	 */
 	public List<CityBikeParkingPoint> getAllCityBikeParkingPoints(GPS gps, long radius) {
 		if(gps == null || radius < 0){
@@ -157,7 +155,7 @@ public class CityBikeSystem {
 
 	/**
 	 * Devuelve una lista de puntos de parking con bicicletas disponibles
-	 * @return
+	 * @return La lista de puntos con bicicletas disponibles
 	 */
 	public List<CityBikeParkingPoint> getCityBikeParkingPointsWithBikes() {
 		ArrayList<CityBikeParkingPoint> pointsNuevo = new ArrayList <CityBikeParkingPoint>();
@@ -171,7 +169,7 @@ public class CityBikeSystem {
 
 	/**
 	 * Devuelve una lista de puntos de parking con sitio libre para dejar la bicicleta
-	 * @return
+	 * @return La lista de puntos con espacio libre para dejar bicicletas
 	 */
 	public List<CityBikeParkingPoint> getCityBikeParkingPointsWithSpace() {
 		ArrayList <CityBikeParkingPoint> pointsNuevo = new ArrayList <CityBikeParkingPoint>();

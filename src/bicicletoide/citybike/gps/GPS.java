@@ -36,7 +36,7 @@ public class GPS {
 	/**
 	 * Constructor de copia de la clase GPS
 	 * @param gps Objeto GPS del cual se realiza la copia
-	 * @throws IllegalArgumentException
+	 * @throws IllegalArgumentException Si el objeto a copiar es null
 	 */
 	public GPS(GPS gps){
 		if(gps == null){
@@ -51,7 +51,7 @@ public class GPS {
 	 * entre -90 y 90, y -180 y 180 GD, respectivamente
 	 * @param latitud Latitud en GD
 	 * @param longitud Longitud en GD
-	 * @throws IllegalArgumentException
+	 * @throws IllegalArgumentException Si la latitud no esta entre [-90,90] o la longitud no esta entre [-180,180]
 	 */
 	public GPS(double latitud,  double longitud){
 		
@@ -76,7 +76,7 @@ public class GPS {
 	 * @param longitudG Grados de la longitud
 	 * @param longitudM Minutos de la longitud
 	 * @param longitudS Segundos de la longitud
-	 * @throws IllegalArgumentException
+	 * @throws IllegalArgumentException Si alguno de los valores no esta en su rango aceptado
 	 */
 	public GPS(int latitudG, int latitudM, double latitudS, int longitudG, int longitudM, double longitudS){
 		if(latitudM < 0 || latitudS < 0 || longitudM < 0 || longitudS <0){
@@ -134,7 +134,7 @@ public class GPS {
 	/**
 	 * Cambia la latitud del punto, el argumento tiene que estar entre -90 y 90 GD
 	 * @param latitud La nueva latitud proporcionada por el usuario
-	 * @throws IllegalArgumentException
+	 * @throws IllegalArgumentException Si la latitud no esta en el rango [-90,90]
 	 */
 	public void setLatitud(double latitud) throws IllegalArgumentException{
 		
@@ -147,7 +147,7 @@ public class GPS {
 
 	/**
 	 * Obtiene la longitud en grados decimales
-	 * @return 
+	 * @return  La longitud en grados decimales
 	 */
 	public double getLongitud() {
 		return longitud;
@@ -156,9 +156,9 @@ public class GPS {
 	/**
 	 * Cambia la longitud del punto, el argumento tiene que estar entre -180 y 180 GD
 	 * @param longitud La nueva longitud proporcionada por el usuario
-	 * @throws IllegalArgumentException
+	 * @throws IllegalArgumentException Si la longitud no esta en el rango [-180,180]
 	 */
-	public void setLongitud(double longitud) throws IllegalArgumentException {
+	public void setLongitud(double longitud) {
 		
 		if(Math.abs(longitud)>180){
 			throw new IllegalArgumentException("La longitud tiene que estar entre -180 y 180 GD");
